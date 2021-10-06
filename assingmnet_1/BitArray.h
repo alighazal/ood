@@ -9,11 +9,13 @@ class BitArray {
     private:
         unsigned int* array; 
         int size;
-        
+
         void printInternals();
 
     public:
         BitArray(int);
+        int Value(int) const;
+        int Value(int, int);
 };
 
 
