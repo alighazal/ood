@@ -10,12 +10,14 @@ class BitArray {
         unsigned int* array; 
         int size;
 
-        void printInternals();
-
     public:
         BitArray(int);
+
         int Value(int) const;
         int Value(int, int);
+        void printInternals();
+        int const operator[] (int) const;
+        ~BitArray();
 };
 
 

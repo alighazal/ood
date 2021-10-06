@@ -21,8 +21,6 @@ BitArray::BitArray(int size)
     {
         this->array[i] = 0;
     }
-
-    printInternals();
 }
 
 int BitArray::Value(int index) const
@@ -66,4 +64,12 @@ void BitArray::printInternals()
         cout << this->array[i] << "   ";
     }
     cout << endl;
+}
+
+int const BitArray::operator[](int index) const {
+    return this->Value(index);
+}
+
+BitArray::~BitArray(){
+    delete[] this->array;
 }
