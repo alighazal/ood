@@ -1,19 +1,19 @@
-#include "BitArray.h"
+#include "BitArray.hpp"
+#include "headers.hpp"
 #include <math.h>
 
 using namespace std;
 
-#define BIT_SIZE 8
-#define SIZE_UNSIGNED_INT sizeof(unsigned int) * BIT_SIZE
 
 BitArray::BitArray(int size)
 {
 
-    // TODO handle bad initializations
-    // initializations with negative sizes
+    if (size < 0){
+        throw std::invalid_argument("Exception: size must be greater than or equal to 0");
+    }
 
     this->size = size;
-    int number_of_bytes = ceil(size / static_cast<double>(BIT_SIZE));
+    int number_of_bytes = ceil(size / static_cast<double>(constants::BIT_SIZE));
     int number_of_unsigned_ints = ceil(number_of_bytes / static_cast<double>(sizeof(unsigned int)));
     this->array = new unsigned int[number_of_unsigned_ints];
 
@@ -26,13 +26,10 @@ BitArray::BitArray(int size)
 int BitArray::Value(int index) const
 {
 
-    int array_index = index / (SIZE_UNSIGNED_INT);
-    int bit_index = index % (SIZE_UNSIGNED_INT);
+    int array_index = index / (constants::SIZE_UNSIGNED_INT);
+    int bit_index = index % (constants::SIZE_UNSIGNED_INT);
 
     unsigned int mask = 1 << bit_index;
-
-    //cout << "hello from BitArray::Value(int index) " << endl;
-    //cout << index  << endl << this->array[array_index] << endl << mask << endl;
 
     return ((this->array[array_index] & mask) >> bit_index );
 }
@@ -40,8 +37,8 @@ int BitArray::Value(int index) const
 int BitArray::Value(int index, int value)
 {
 
-    int array_index = index / (SIZE_UNSIGNED_INT);
-    int bit_index = index % (SIZE_UNSIGNED_INT);
+    int array_index = index / (constants::SIZE_UNSIGNED_INT);
+    int bit_index = index % (constants::SIZE_UNSIGNED_INT);
 
     unsigned int mask = value << bit_index;
 
@@ -54,7 +51,7 @@ int BitArray::Value(int index, int value)
 void BitArray::printInternals()
 {
 
-    int number_of_bytes = ceil(this->size / static_cast<double>(BIT_SIZE));
+    int number_of_bytes = ceil(this->size / static_cast<double>(constants::BIT_SIZE));
     int number_of_unsigned_ints = ceil(number_of_bytes / static_cast<double>(sizeof(unsigned int)));
 
     cout << "number of bits:  " << this->size << endl;

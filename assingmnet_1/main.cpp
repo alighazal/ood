@@ -1,24 +1,51 @@
 #include<iostream>
-#include "BitArray.h"
+#include "BitArray.hpp"
 
 using namespace std;
 
 
+void test() {
+    int index = 32*3+5;
+    int size = 32*4;
+
+    BitArray c(size);
+    c.Value( index , 1); 
+    cout << c.Value(index) << endl; // 1
+    cout << c[index] << endl;       // 1
+    c.Value(index, 0);
+    cout << c[index] << endl;       // 0
+    c[index] = 1;
+    cout << c[index] << endl;       // 1
+
+    c[0] = 1;
+    c[1] = 1;
+    c[2] = 1;
+    c[3] = 1;
+    c[4] = 1;
+    c[5] = 1;
+    c[6] = 1;
+    c[7] = 1;
+
+    c.printInternals(); // [255, 0, 0, 32 ]
+
+    try {
+        BitArray d(-50);            // Exception
+    } catch (exception& e){
+        cout << e.what() << endl;
+    }
+
+    try {
+        c[32*3 + 5] = 8;            // Exception
+    } catch (exception& e){
+        cout << e.what() << endl;
+    }
+
+}
+
+
 int main() {
 
-    BitArray c(32*4);
-    c.Value(32*3+5, 1);
-    cout <<c.Value(32*3+5) << endl;
-    cout << c[32*3+5] << endl;
-    c.Value(32*3+5, 0);
-    cout << c[32*3+5] << endl;
-    c[32*3 + 5] = 1;
-    cout << c[32*3+5] << endl;
-    c[32*3 + 5] = 8;
-    cout << c[32*3+5] << endl;
-
-
-
+    test();
     return 0;
 
 }
