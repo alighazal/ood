@@ -11,6 +11,11 @@ int main() {
     cout << c[32*3+5] << endl;
     c.Value(32*3+5, 0);
     cout << c[32*3+5] << endl;
+    c[32*3 + 5] = 1;
+    cout << c[32*3+5] << endl;
+
+
+
     return 0;
 
 }

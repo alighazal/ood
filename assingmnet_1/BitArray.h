@@ -7,7 +7,20 @@
 class BitArray {
 
     private:
-        unsigned int* array; 
+        class BitsContainer{
+            private:
+                unsigned int bitContainer;
+
+            public:
+                BitsContainer();
+                unsigned int& Value();
+                BitsContainer& operator=(unsigned int);
+                operator unsigned int() const { return this->bitContainer ; }
+                unsigned int operator[] (int);
+
+        };
+
+        BitsContainer * array; 
         int size;
 
     public:
@@ -16,7 +29,7 @@ class BitArray {
         int Value(int) const;
         int Value(int, int);
         void printInternals();
-        int const operator[] (int) const;
+        BitsContainer& operator[] (int);
         ~BitArray();
 };
 

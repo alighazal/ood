@@ -15,12 +15,8 @@ BitArray::BitArray(int size)
     this->size = size;
     int number_of_bytes = ceil(size / static_cast<double>(BIT_SIZE));
     int number_of_unsigned_ints = ceil(number_of_bytes / static_cast<double>(sizeof(unsigned int)));
-    this->array = new unsigned int[number_of_unsigned_ints];
+    this->array = new BitsContainer[number_of_unsigned_ints];
 
-    for (int i = 0; i < number_of_unsigned_ints; i++)
-    {
-        this->array[i] = 0;
-    }
 }
 
 int BitArray::Value(int index) const
@@ -31,7 +27,7 @@ int BitArray::Value(int index) const
 
     unsigned int mask = 1 << bit_index;
 
-    return ((this->array[array_index] & mask) >> bit_index);
+    return (this->array[array_index][bit_index]);
 }
 
 int BitArray::Value(int index, int value)
@@ -42,7 +38,7 @@ int BitArray::Value(int index, int value)
 
     unsigned int mask = value << bit_index;
 
-    (value == 1) ? this->array[array_index] |= mask : this->array[array_index] &= mask;
+    (value == 1) ? this->array[array_index].Value() |= mask : this->array[array_index].Value() &= mask;
 
     return this->Value(index);
 
@@ -61,13 +57,19 @@ void BitArray::printInternals()
     cout << "array elements:   " << endl;
     for (int i = 0; i < number_of_unsigned_ints; i++)
     {
-        cout << this->array[i] << "   ";
+        cout << this->array[i].Value() << "   ";
     }
     cout << endl;
 }
 
-int const BitArray::operator[](int index) const {
-    return this->Value(index);
+BitArray::BitsContainer& BitArray::operator[](int index) {
+
+    cout << " u called me " << endl;
+
+    int array_index = index / (SIZE_UNSIGNED_INT);
+    int bit_index = index % (SIZE_UNSIGNED_INT);
+
+    return this->array[array_index];
 }
 
 BitArray::~BitArray(){
