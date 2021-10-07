@@ -1,3 +1,13 @@
+/*
+* Assingment 1: OOD -- Prof. Kassas
+* Student Name: Ali Ghazal
+* Sudent ID: 900171722
+* Deadline: 7/10/2021
+
+* Proxy Class Implementation
+*/
+
+
 #include "BitArray.hpp"
 
 BitArray::Proxy::Proxy(BitArray &a, int i):array(a), index(i){}

@@ -4,7 +4,7 @@
 * Sudent ID: 900171722
 * Deadline: 7/10/2021
 
-* BitArray Class
+* BitArray Class Header File
 */
 
 

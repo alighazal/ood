@@ -1,3 +1,14 @@
+
+/*
+* Assingment 1: OOD -- Prof. Kassas
+* Student Name: Ali Ghazal
+* Sudent ID: 900171722
+* Deadline: 7/10/2021
+
+* BitArray Class Implementation
+*/
+
+
 #include "BitArray.hpp"
 #include "headers.hpp"
 #include <math.h>
