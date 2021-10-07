@@ -4,23 +4,31 @@
 
 #include <iostream>
 
+#define BIT_SIZE 8
+#define SIZE_UNSIGNED_INT sizeof(unsigned int) * BIT_SIZE
+
 class BitArray {
 
     private:
-        class BitsContainer{
+        class Proxy{
             private:
-                unsigned int bitContainer;
-
+                BitArray &array;
+                int index;
             public:
-                BitsContainer();
-                unsigned int& Value();
-                BitsContainer& operator=(unsigned int);
-                operator unsigned int() const { return this->bitContainer ; }
-                unsigned int operator[] (int);
-
+                Proxy(BitArray &a, int i): array(a), index(i){}
+                operator unsigned int() const {
+                    return this->array.Value(this->index); 
+                }
+                unsigned int operator= (int value) { 
+                    if (value != 0 && value != 1){
+                        throw std::invalid_argument("Exception: you can only assign 0's and 1's");
+                    }
+                    this->array.Value(this->index, value);
+                    return this->array.Value(this->index);
+                }
         };
 
-        BitsContainer * array; 
+        unsigned int * array; 
         int size;
 
     public:
@@ -29,7 +37,7 @@ class BitArray {
         int Value(int) const;
         int Value(int, int);
         void printInternals();
-        BitsContainer& operator[] (int);
+        Proxy operator[] (int index);
         ~BitArray();
 };
 
