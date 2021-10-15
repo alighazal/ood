@@ -6,6 +6,8 @@
 * Deadline: 15/10/2021
 
 * SortedArray Class Implementation
+* implementation of move constuctor inspired by 
+* https://docs.microsoft.com/en-us/cpp/cpp/move-constructors-and-move-assignment-operators-cpp?view=msvc-160
 */
 
 

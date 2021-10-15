@@ -5,6 +5,7 @@
 * Deadline: 15/10/2021
 
 * SortedArray Class Header File
+* this code is paritally inspired by the code from https://www.geeksforgeeks.org/quick-sort/
 */
 
 
