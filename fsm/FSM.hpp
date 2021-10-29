@@ -1,6 +1,6 @@
 
-#ifndef FSM_CLASS
-#define FSM_CLASS
+#ifndef _FSM_
+#define _FSM_
 
 #include <iostream>
 #include <vector>
@@ -11,9 +11,39 @@
 #include "signals.hpp"
 
 using namespace std;
-
 class FSM{
     private:
+        class State{
+            private:
+                string name;
+                vector<Action*> actions;
+                FSM *fsm;
+
+            public:
+                State( FSM *fsm, string name, vector<Action*> actions)
+                    : name(name) 
+                    , actions(actions)
+                    , fsm(fsm){}
+
+                State() :name(""){}
+
+                void AddAction(Action* action){
+                    actions.push_back(action);
+                }
+                string getName(){
+                    return this->name;
+                }
+                void executeActions(){
+                    cout << "*** i am fsm named: " << this->fsm->getName() << " ****   " <<endl;
+                    cout << "Executing state "  << this->name <<  " actions ..." 
+                        << endl << "----------" << endl;
+                    for (auto & action : actions ){
+                        action->execute(this->fsm->variables);
+                    }
+                    cout << "---------------------------" << endl << endl;
+                }
+            };
+
         string name;
         unordered_map<string, State> states_map;
         unordered_map<string, int> variables;
@@ -152,7 +182,7 @@ class FSM{
                         }
                 }
 
-                State temp = State( states[i][0], actions);
+                State temp = State( this, states[i][0], actions);
                 StatesClass.push_back(temp);
                 this->states_map[states[i][0]] = temp;
                 if (i == 0) this->currentState = this->states_map[states[i][0]];
