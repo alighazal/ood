@@ -1,6 +1,6 @@
 
-#ifndef FSM_CLASS
-#define FSM_CLASS
+#ifndef _FSM_
+#define _FSM_
 
 #include <iostream>
 #include <vector>
@@ -11,8 +11,9 @@
 #include "signals.hpp"
 
 using namespace std;
-
 class FSM{
+    
+
     private:
         string name;
         unordered_map<string, State> states_map;
@@ -125,28 +126,28 @@ class FSM{
                 for (int j = 1; j < states[i].size();) {
                         if (states[i][j] == "out" ){
                             if (states[i][j+1][0] == '"' ){ // quote
-                                PrintStringAction* temp = new PrintStringAction(states[i][j+1]);
+                                PrintStringAction* temp = new PrintStringAction(this, states[i][j+1]);
                                 actions.push_back(temp);
                             }else{
-                                PrintExpressionAction* temp = new PrintExpressionAction(states[i][j+1]);
+                                PrintExpressionAction* temp = new PrintExpressionAction(this, states[i][j+1]);
                                 actions.push_back(temp);
                             }
                             j += 2;
                         }else if(states[i][j] == "sleep" ){
-                            SleepAction* temp = new SleepAction(stoi(states[i][j+1]));
+                            SleepAction* temp = new SleepAction(this, stoi(states[i][j+1]));
                             actions.push_back(temp);
                             j += 2;
                         }else if(states[i][j] == "wait"){
-                            WaitAction* temp = new WaitAction();
+                            WaitAction* temp = new WaitAction(this );
                             actions.push_back(temp);
                             j += 1;
                         }else if (states[i][j] == "end"){
-                            EndAction* temp = new EndAction();
+                            EndAction* temp = new EndAction(this);
                             actions.push_back(temp);
                             j += 1;
                         }
                         else{
-                            ExpressionAction* temp = new ExpressionAction(states[i][j]);
+                            ExpressionAction* temp = new ExpressionAction(this, states[i][j]);
                             actions.push_back(temp);
                             j += 1;
                         }

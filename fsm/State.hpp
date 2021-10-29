@@ -3,23 +3,26 @@
 #define STATE
 
 using namespace std;
+
 #include <iostream>
 #include <vector>
-#include "Action.hpp"
-#include "signals.hpp"
+#include <unordered_map>
 
+class FSM;
 
 class State{
 
     private:
         string name;
         vector<Action*> actions;
-        
-    
     public:
-        State(string name, vector<Action*> actions):name(name), actions(actions){}
-        State(string name) :name(name){}
-        State() :name(""){} //TODO add static counter to state to give each state a unique number
+        State(  string name, vector<Action*> actions)
+            : name(name) 
+            , actions(actions){}
+
+        State()
+            :name(""){}
+
         void AddAction(Action* action){
             actions.push_back(action);
         }
