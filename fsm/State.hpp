@@ -14,6 +14,7 @@ class State{
     private:
         string name;
         vector<Action*> actions;
+        
     
     public:
         State(string name, vector<Action*> actions):name(name), actions(actions){}
