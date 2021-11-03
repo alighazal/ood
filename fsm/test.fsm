@@ -1,5 +1,5 @@
 FSM fsmOne
-VAR X, Y
+VAR X, Y, Z 
 States:
 a: out "state A", out X, X=X+1, sleep 10, wait
 b: out "state B", Y=Y+1, sleep 10, wait

@@ -1,0 +1,1 @@
+g++ ./*.cpp -o fsm.out; ./fsm.out ; rm ./fsm.out
