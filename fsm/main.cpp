@@ -10,7 +10,6 @@ using namespace std;
 int main(){
 
     /*
-        TODO: handle un known state transitions
         TODO: refactor classes into header and functions files
         TODO: clean up dipatching of functions
         TODO: handle corrupted files

@@ -15,38 +15,38 @@ class FSM
 private:
     class State
     {
-    private:
-        string name;
-        vector<Action *> actions;
-        FSM *fsm;
+        private:
+            string name;
+            vector<Action *> actions;
+            FSM *fsm;
 
-    public:
-        State(FSM *fsm, string name, vector<Action *> actions)
-            : name(name), actions(actions), fsm(fsm) {}
+        public:
+            State(FSM *fsm, string name, vector<Action *> actions)
+                : name(name), actions(actions), fsm(fsm) {}
 
-        State() : name("") {}
+            State() : name("") {}
 
-        void AddAction(Action *action)
-        {
-            actions.push_back(action);
-        }
-        string getName()
-        {
-            return this->name;
-        }
-        void executeActions()
-        {
-            cout << "*** i am fsm named: " << this->fsm->getName() << " ****   " << endl;
-            cout << "Executing state " << this->name << " actions ..."
-                 << endl
-                 << "----------" << endl;
-            for (auto &action : actions)
+            void AddAction(Action *action)
             {
-                action->execute(this->fsm->variables);
+                actions.push_back(action);
             }
-            cout << "---------------------------" << endl
-                 << endl;
-        }
+            string getName()
+            {
+                return this->name;
+            }
+            void executeActions()
+            {
+                //cout << "*** i am fsm named: " << this->fsm->getName() << " ****   " << endl;
+                cout << "Executing state " << this->name << " actions ..."
+                    << endl
+                    << "----------" << endl;
+                for (auto &action : actions)
+                {
+                    action->execute(this->fsm->variables);
+                }
+                cout << "---------------------------" << endl
+                    << endl;
+            }
     };
 
     string name;
@@ -249,9 +249,9 @@ public:
     void runSimulation()
     {
 
-        cout << "running Simulation " << endl;
+        cout << "running Simulation of " << this->getName() << endl;
 
-        int value;
+        char value;
 
         while (true)
         {
@@ -260,7 +260,18 @@ public:
             cout << "inset value" << endl;
             cin >> value;
 
-            this->currentState = this->states_map[this->transitions_table[this->currentState.getName()][value]];
+            cout << "--->"  << isdigit(value) << endl;
+
+            if (!isdigit(value)){
+                throw invalid_argument("State Transitions Should Only be Numbers");
+            }
+
+            if (this->transitions_table[this->currentState.getName()].find(atoi(&value)) != this->transitions_table[this->currentState.getName()].end()){
+                this->currentState = this->states_map[this->transitions_table[this->currentState.getName()][atoi(&value)]];
+            }else{
+                cout << "!! Unsupported Transition. Please Enter a Valid One !!" << endl;
+            }
+
         }
     }
 };
