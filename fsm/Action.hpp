@@ -5,12 +5,13 @@
 using namespace std;
 #include <iostream>
 #include <thread>
+#include <unordered_map>
 #include <chrono>
 
 
 class Action {
     public:
-        virtual void execute() = 0; 
+        virtual void execute( unordered_map<string, int> & vars ) = 0; 
 };
 
 class PrintStringAction: public Action{
@@ -19,9 +20,10 @@ class PrintStringAction: public Action{
     
     public:
         PrintStringAction(string s):expression(s) {}
-        virtual void execute(){
-            cout << "print string action --> " << this->expression << endl;
-        };
+        virtual void execute(unordered_map<string, int> & vars);
+        ~PrintStringAction(){
+            this->expression = "";
+        }
 
 };
 
@@ -31,21 +33,24 @@ class PrintExpressionAction: public Action{
     
     public:
         PrintExpressionAction(string s):expression(s) {}
-        virtual void execute(){
-            cout << "print expression action --> " << this->expression << endl;
-        };
+        virtual void execute(unordered_map<string, int> & vars);
+        ~PrintExpressionAction(){
+            this->expression = "";
+        }
 
 };
 
 class ExpressionAction: public Action{
     private:
         string expression; 
+        void executeExpression(unordered_map<string, int> & vars, string s);
     
     public:
         ExpressionAction(string s):expression(s) {}
-        virtual void execute(){
-            cout << "expression action --> " << this->expression << endl;
-        };
+        virtual void execute(unordered_map<string, int> & vars);
+        ~ExpressionAction(){
+            this->expression = "";
+        }
 
 };
 
@@ -55,31 +60,29 @@ class SleepAction: public Action{
     
     public:
         SleepAction(int t):time(t) {}
-        virtual void execute(){
-            cout << "sleeping for --> " << this->time << endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(this->time * 1000));
-        };
+        virtual void execute(unordered_map<string, int> & vars);
+        ~SleepAction(){
+            this->time = 0;
+        }
 
 };
 
 class WaitAction: public Action{
     public:
         WaitAction(){}
-        virtual void execute(){
-            cout << "waiting... " << endl;
-        };
+        virtual void execute(unordered_map<string, int> & vars);
+        ~WaitAction(){
+        }
 
 };
 
 class EndAction: public Action{
     public:
         EndAction(){}
-        virtual void execute(){
-            cout << "the end " << endl;
-            exit(1);
-        };
+        virtual void execute(unordered_map<string, int> & vars);
+        ~EndAction(){
+
+        }
 };
-
-
 
 #endif 
