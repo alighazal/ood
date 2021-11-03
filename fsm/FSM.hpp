@@ -20,13 +20,24 @@ private:
             FSM *fsm;
 
         public:
+            State()
+                : name("Null State"), fsm(nullptr) {};
+
             State(FSM *fsm, string name, vector<Action *> actions)
-                : name(name), actions(actions), fsm(fsm) {}
+                : name(name), actions(actions), fsm(fsm) {};
 
             string getName();
-            State() : name("") {}
+            //State() : name("") {}
+
+            State(const State& copy);
+            State& operator=(const State& copy);
+            State(State&& other);
+            State& operator=(State&& other);
+
             void AddAction(Action *action);
             void executeActions();
+            void clear();
+            ~State();
     };
 
     string name;
@@ -42,8 +53,13 @@ private:
 public:
     FSM():name(""){};
     FSM(string text_body);
+    FSM(const FSM& copy);
+    FSM& operator=(const FSM& copy);
+    FSM(FSM&& other);
+    FSM& operator=(FSM&& other);
     string getName();
     void runSimulation();
+    ~FSM();
 };
 
 #endif

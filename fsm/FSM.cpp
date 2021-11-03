@@ -8,6 +8,57 @@ FSM::FSM(string text_body)
     this->parse(text_body);
 }
 
+FSM::FSM(const FSM& copy){
+
+    this->name = copy.name;
+    this->states_map = unordered_map<string, State>(copy.states_map);
+    this->variables = unordered_map<string, int>(copy.variables);    
+    this->transitions_table = unordered_map<string, unordered_map<int, string>>(copy.transitions_table);
+    this->currentState = copy.currentState;
+}
+FSM& FSM::operator=(const FSM& copy){
+    if (this != &copy)
+    {
+        this->name = copy.name;
+        this->states_map = unordered_map<string, State>(copy.states_map);
+        this->variables = unordered_map<string, int>(copy.variables);    
+        this->transitions_table = unordered_map<string, unordered_map<int, string>>(copy.transitions_table);
+        this->currentState = copy.currentState;
+    }
+    return *this;
+}
+
+FSM::FSM(FSM&& other){
+
+    this->name = other.name;
+    this->states_map = unordered_map<string, State>(other.states_map);
+    this->variables = unordered_map<string, int>(other.variables);    
+    this->transitions_table = unordered_map<string, unordered_map<int, string>>(other.transitions_table);
+    this->currentState = other.currentState;
+
+    other.name = "";
+    other.currentState.clear();
+    other.states_map.clear();
+    other.transitions_table.clear();
+    other.variables.clear();
+}
+
+FSM& FSM::operator=(FSM&& other){
+    if (this != &other)
+    {
+        this->name = other.name;
+        this->states_map = unordered_map<string, State>(other.states_map);
+        this->variables = unordered_map<string, int>(other.variables);    
+        this->transitions_table = unordered_map<string, unordered_map<int, string>>(other.transitions_table);
+        this->currentState = other.currentState;
+
+        other.name = "";
+        other.states_map.clear();
+        other.transitions_table.clear();
+        other.variables.clear();
+    }
+    return *this;
+}
 
 string FSM::getName()
 {
@@ -189,3 +240,10 @@ void FSM::runSimulation()
     }
 }
 
+
+FSM::~FSM(){
+    //this->name = "";
+    //this->variables.clear();
+    //this->transitions_table.clear();
+    //this->currentState.clear();
+}

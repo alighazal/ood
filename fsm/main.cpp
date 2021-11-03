@@ -9,15 +9,6 @@ using namespace std;
 
 int main(){
 
-    /*
-        TODO: refactor classes into header and functions files
-        TODO: clean up dipatching of functions
-        TODO: handle corrupted files
-        TODO: add copy and move constructors
-        TODO: add copy and move assingments 
-    */
-
-
     string body = "";
     std::ifstream file("test.fsm");
     if (file.is_open()) {

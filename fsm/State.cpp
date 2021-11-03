@@ -27,3 +27,63 @@ void FSM::State::executeActions()
     cout << "---------------------------" << endl
          << endl;
 }
+
+void FSM::State::clear(){
+
+    this->name = "";
+    this->fsm = nullptr;
+    this->actions.clear();
+}
+
+FSM::State::State(const State& copy){
+    this->name = copy.name;
+    this->fsm = copy.fsm;
+    this->actions = copy.actions;
+}
+
+FSM::State& FSM::State::operator=(const State& copy){
+
+    if (this != &copy)
+    {
+        this->name = copy.name;
+        this->fsm = copy.fsm;
+        this->actions = copy.actions;
+    }
+
+    return *this;
+
+}
+
+FSM::State::State(State&& other){
+
+    this->name = other.name;
+    this->fsm = other.fsm;
+    this->actions = other.actions;
+
+    other.name = "";
+    other.fsm = nullptr;
+    other.actions.clear();
+
+}
+
+FSM::State& FSM::State::operator=(State&& other){
+
+
+    if (this != &other)
+    {
+        this->name = other.name;
+        this->fsm = other.fsm;
+        this->actions = other.actions;
+
+        other.name = "";
+        other.fsm = nullptr;
+        other.actions.clear();
+    }
+
+    return *this;
+
+}
+
+FSM::State::~State(){
+    this->clear();
+}
